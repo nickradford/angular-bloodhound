@@ -6,9 +6,9 @@
 
 (function() {
   'use strict';
-  
+
   var module = angular.module('bloodhound.search-index', []);
-  
+
   module.factory('SearchIndex', function($filter) {
     var filter = $filter('filter');
 
@@ -48,13 +48,13 @@
 
           data = angular.isArray(data) ? data : [data];
 
-          _.each(data, function(datum) {
+          angular.forEach(data, function(datum) {
             var id, tokens;
 
             id = that.datums.push(datum) - 1;
             tokens = normalizeTokens(that.datumTokenizer(datum));
 
-            _.each(tokens, function(token) {
+            angular.forEach(tokens, function(token) {
               var node, chars, ch;
 
               node = that.trie;
@@ -73,7 +73,7 @@
 
           tokens = normalizeTokens(this.queryTokenizer(query));
 
-          _.each(tokens, function(token) {
+          angular.forEach(tokens, function(token) {
             var node, chars, ch, ids;
 
             // previous tokens didn't share any matches
@@ -101,7 +101,7 @@
           });
 
           return matches ?
-            _.map(unique(matches), function(id) { return that.datums[id]; }) : [];
+            unique(matches).map(function(id) { return that.datums[id]; }) : [];
         },
 
         reset: function reset() {
@@ -124,7 +124,7 @@
         tokens = filter(tokens, function(token) { return !!token; });
 
         // normalize tokens
-        tokens = _.map(tokens, function(token) { return token.toLowerCase(); });
+        tokens = tokens.map(function(token) { return token.toLowerCase(); });
 
         return tokens;
       }
@@ -173,7 +173,7 @@
         function compare(a, b) { return a - b; }
       }
     })();
-    
+
     return SearchIndex;
   });
 })();

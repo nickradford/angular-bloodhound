@@ -23,7 +23,7 @@
 			prefetch: 'fixtures/prefetch.json',
 			remote: 'fixtures/remote.json?query=%QUERY',
 			datumTokenizer: function(datum) {
-				return _.toArray(datum);
+				return [datum.firstName, datum.lastName];
 			},
 			queryTokenizer: Bloodhound.tokenizers.whitespace
 		});

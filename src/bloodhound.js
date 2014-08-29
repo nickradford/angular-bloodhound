@@ -5,9 +5,9 @@
  */
 (function() {
   'use strict';
-  
+
   var module = angular.module('bloodhound', ['bloodhound.tokenizers', 'bloodhound.options-parser', 'bloodhound.search-index', 'bloodhound.persistent-storage', 'bloodhound.transport']);
-  
+
   module.factory('Bloodhound', function($rootScope, $q, $http, tokenizers, oParser, SearchIndex, PersistentStorage, Transport) {
     var Bloodhound = (function() {
       var old, keys;
@@ -136,7 +136,7 @@
             deferred.resolve();
             promise = deferred.promise;
           }
-          
+
           /*
           promise = this.prefetch ?
             this._loadPrefetch(this.prefetch) : $.Deferred().resolve();
@@ -187,11 +187,11 @@
           function returnRemoteMatches(remoteMatches) {
             var matchesWithBackfill = matches.slice(0);
 
-            _.each(remoteMatches, function(remoteMatch) {
+            angular.forEach(remoteMatches, function(remoteMatch) {
               var isDuplicate;
 
               // checks for duplicates
-              isDuplicate = _.some(matchesWithBackfill, function(match) {
+              isDuplicate = matchesWithBackfill.some(function(match) {
                 return that.dupDetector(remoteMatch, match);
               });
 
@@ -232,7 +232,7 @@
 
       function ignoreDuplicates() { return false; }
     })();
-    
+
     return Bloodhound;
   });
 })();

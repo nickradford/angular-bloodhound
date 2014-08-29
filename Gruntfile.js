@@ -19,8 +19,7 @@ module.exports = function(grunt) {
 		uglify: {
 			options: {
 				enclose: {
-					'window.angular': 'angular',
-					'window._': '_'
+					'window.angular': 'angular'
 				}
 			},
 			ngBloodhound: {

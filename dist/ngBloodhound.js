@@ -1,5 +1,5 @@
-(function(angular, _) {
-    var VERSION = "0.10.2";
+(function(angular) {
+    var VERSION = "0.11.0";
     (function() {
         "use strict";
         var module = angular.module("bloodhound.tokenizers", []);
@@ -297,11 +297,11 @@
                     add: function(data) {
                         var that = this;
                         data = angular.isArray(data) ? data : [ data ];
-                        _.each(data, function(datum) {
+                        angular.forEach(data, function(datum) {
                             var id, tokens;
                             id = that.datums.push(datum) - 1;
                             tokens = normalizeTokens(that.datumTokenizer(datum));
-                            _.each(tokens, function(token) {
+                            angular.forEach(tokens, function(token) {
                                 var node, chars, ch;
                                 node = that.trie;
                                 chars = token.split("");
@@ -315,7 +315,7 @@
                     get: function get(query) {
                         var that = this, tokens, matches;
                         tokens = normalizeTokens(this.queryTokenizer(query));
-                        _.each(tokens, function(token) {
+                        angular.forEach(tokens, function(token) {
                             var node, chars, ch, ids;
                             if (matches && matches.length === 0) {
                                 return false;
@@ -333,7 +333,7 @@
                                 return false;
                             }
                         });
-                        return matches ? _.map(unique(matches), function(id) {
+                        return matches ? unique(matches).map(function(id) {
                             return that.datums[id];
                         }) : [];
                     },
@@ -353,7 +353,7 @@
                     tokens = filter(tokens, function(token) {
                         return !!token;
                     });
-                    tokens = _.map(tokens, function(token) {
+                    tokens = tokens.map(function(token) {
                         return token.toLowerCase();
                     });
                     return tokens;
@@ -584,9 +584,9 @@
                         }
                         function returnRemoteMatches(remoteMatches) {
                             var matchesWithBackfill = matches.slice(0);
-                            _.each(remoteMatches, function(remoteMatch) {
+                            angular.forEach(remoteMatches, function(remoteMatch) {
                                 var isDuplicate;
-                                isDuplicate = _.some(matchesWithBackfill, function(match) {
+                                isDuplicate = matchesWithBackfill.some(function(match) {
                                     return that.dupDetector(remoteMatch, match);
                                 });
                                 !isDuplicate && matchesWithBackfill.push(remoteMatch);
@@ -672,4 +672,4 @@
             };
         });
     })();
-})(window.angular, window._);
+})(window.angular);
